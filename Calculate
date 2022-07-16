@@ -1,0 +1,13 @@
+with cte as 
+(SELECT
+    Row_Number() OVER(ORDER BY column_name) AS RowNumber,
+   column_name
+ FROM rowdata) 
+SELECT 
+
+   a.column_name - ISNULL(b.column_name,0)
+FROM
+   cte a
+   LEFT  JOIN cte b
+   on 
+     a.RowNumber = b.RowNumber+1 
